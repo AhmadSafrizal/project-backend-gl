@@ -36,7 +36,35 @@ const getAllKategori = async function (req, res) {
 }
 
 
+const getProdukByKategoriId = async function (req, res) {
+
+  const kategoriId = req.params.kategori_id;
+
+  try {
+    await client.connect();
+
+    const produkCollection = await client.db("ecommerce").collection("produk");
+
+    // Get products based on kategoriId
+    const products = await produkCollection.find({ kategori_id: parseInt(kategoriId) })
+      .limit(50)
+      .toArray();
+
+    if (products.length === 0) {
+      return res.status(404).send({ message: 'Wah  produk dengan kategori tersebut tidak ada nih !!!' });
+    }
+
+    console.log(`Get produk dengan kategori_id : ${kategoriId}`);
+    res.send(products);
+  } finally {
+    await client.close();
+  }
+}
+
+
+
 module.exports = {
     getAllProduk,
-    getAllKategori
+    getAllKategori,
+    getProdukByKategoriId
 }
