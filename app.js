@@ -12,3 +12,4 @@ app.listen(4000, () => {
 app.use("/produk", produkRouter);
 
 module.exports = app;
+ 
