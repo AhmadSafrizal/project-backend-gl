@@ -6,4 +6,4 @@
 - Michael Shawn A
 - Muhammad Ari Mahfudho
 - Syahrial Mubarok
-- Yoga Ade Pangestuu
+- Yoga Ade Pangestu
