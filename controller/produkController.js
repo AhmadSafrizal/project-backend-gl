@@ -61,9 +61,35 @@ const getProdukByKategoriId = async function (req, res) {
 	}
   }
 
+  const getProdukByArea = async function (req, res) {
+    const area = req.params.area;
+  
+    try {
+      await client.connect();
+  
+      const produkCollection = await client.db("ecommerce").collection("produk");
+      // Menggunakan ekspresi reguler untuk mencocokkan area tanpa memperhatikan huruf besar/kecil
+      const areaRegex = new RegExp(area, 'i');
+      // Dapatkan produk berdasarkan area
+      const products = await produkCollection.find({ area: { $regex: areaRegex } })
+        .limit(50)
+        .toArray();
+  
+      if (products.length === 0) {
+        return res.status(404).send({ message: `Produk di area ${area} tidak ditemukan.`});
+      }
+  
+      console.log(`Get produk di area: ${area}`);
+      res.send(products);
+    } finally {
+      await client.close();
+    }
+  }  
+
 
 module.exports = {
     getAllProduk,
     getAllKategori,
-    getProdukByKategoriId
+    getProdukByKategoriId,
+    getProdukByArea
 }
