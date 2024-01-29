@@ -14,6 +14,7 @@ const options = {
       },
     ],
     paths: {
+      // Produk ALl
       "/produk/all": {
         get: {
           summary: "Mengambil semua data produk",
@@ -73,6 +74,76 @@ const options = {
                         },
                         sold: {
                           type: "integer",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+
+      // Kategori Produk
+      "/produk/kategori": {
+        get: {
+          summary: "Mengambil semua data kategori produk",
+          description:
+            "Mengambil semua data pada tabel kategori yang ada dalam database",
+          responses: {
+            200: {
+              description: "Berhasil mengambil data kategori",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        _id: {
+                          type: "string",
+                        },
+                        kategori_id: {
+                          type: "integer",
+                        },
+                        name: {
+                          type: "string",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+
+      // Kategori Produk
+      "/produk/kategori/:kategori_id": {
+        get: {
+          summary: "Mengambil data kategori produk by id",
+          description:
+            "Mengambil data pada tabel kategori yang ada dalam database berdasarkan kategori id",
+          responses: {
+            200: {
+              description: "Berhasil mengambil data kategori",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        _id: {
+                          type: "string",
+                        },
+                        kategori_id: {
+                          type: "integer",
+                        },
+                        name: {
+                          type: "string",
                         },
                       },
                     },
