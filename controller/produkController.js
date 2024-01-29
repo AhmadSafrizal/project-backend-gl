@@ -89,6 +89,8 @@ const getProdukByArea = async function (req, res) {
 
 module.exports = {
   getAllProduk,
+  //search
+  //getProdukByFiltering(query)
   getAllKategori,
   getProdukByKategoriId,
   getProdukByArea,

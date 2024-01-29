@@ -1,0 +1,5 @@
+//GET geyAllOrder(order_id)
+//GET getOrderById(order_id)
+//POST createOrder(object produk)
+//PUT editOrder(order_id, object produk)
+//DELETE deleteOrder(order_id)
