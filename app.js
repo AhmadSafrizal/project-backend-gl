@@ -16,5 +16,8 @@ app.listen(4000, () => {
 });
 
 app.use("/produk", produkRouter);
+//app.use("/userk", userRouter);
+//app.use("/orderk", orderkRouter);
+
 
 module.exports = app;
