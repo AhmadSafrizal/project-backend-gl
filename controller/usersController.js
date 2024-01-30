@@ -141,6 +141,27 @@ const registerUser = async function (req, res) {
   }
 };
 
+const deleteUser = async function (req, res) {
+  try {
+    await client.connect();
+
+    const userId = parseInt(req.params.user_id);
+
+    const collection = await client.db("ecommerce").collection("users");
+
+    const result = await collection.deleteOne({ user_id: userId });
+
+    if (result.deletedCount === 1) {
+      console.log(`User dengan id ${userId} berhasil didelete`);
+      res.send(`User dengan id ${userId} berhasil didelete`);
+    } else {
+      console.log(`User dengan id ${userId} tidak ada`);
+      res.status(404).send(`User dengan id ${userId} tidak ada`);
+    }
+  } finally {
+    await client.close();
+  }
+};
 
  module.exports = {
    //POST registerUser(no_hp, name)
@@ -153,6 +174,7 @@ const registerUser = async function (req, res) {
    //GET getUserById(user_id)
    //PUT editUser(user_id)
    updateUser,
+   deleteUser
    //DELETE deleteUser(user_id)
 
  };

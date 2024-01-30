@@ -10,5 +10,6 @@ router.get('/getUserById/:userId', usersController.getUserById);
 router.get('/getApiKey/:no_hp', usersController.getApiKey);
 router.put('/updateUser/:user_id', usersController.updateUser);
 router.post('/registerUser', usersController.registerUser);
+router.delete('/delete/:user_id', usersController.deleteUser);
   
 module.exports = router;
