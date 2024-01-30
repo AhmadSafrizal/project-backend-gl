@@ -10,5 +10,6 @@ router.get(
   produkController.getProdukByKategoriId
 );
 router.get("/area/:area", produkController.getProdukByArea);
+router.get("/name/:name", produkController.getProdukByName);
 
 module.exports = router;
