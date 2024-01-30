@@ -45,7 +45,7 @@ const getAllKategori = async function (req, res) {
 };
 
 const getProdukByKategoriId = async function (req, res) {
-  const kategoriId = req.params.kategori_id;
+  const kategoriId = parseInt(req.params.kategori_id);
   let page = parseInt(req.query.page) || 1;
   let pageSize = parseInt(req.query.pageSize) || 10;
 
@@ -56,7 +56,7 @@ const getProdukByKategoriId = async function (req, res) {
 
     // Get produk berdasarkan kategoriId
     const products = await produkCollection
-      .find({})
+      .find({ kategori_id: kategoriId })
       .skip((page - 1) * pageSize)
       .limit(pageSize)
       .toArray();
