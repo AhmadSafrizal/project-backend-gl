@@ -73,6 +73,32 @@ const getUserById = async (req, res) => {
 };
 
 
+const updateUser = async function (req, res) {
+  try {
+    await client.connect();
+
+    const userId = parseInt(req.params.user_id); 
+
+    const collection = await client.db("ecommerce").collection("users");
+
+    const updateOperation = {
+      $set: {
+        no_hp: req.body.no_hp,
+        name: req.body.name,
+      }
+    };
+
+    const result = await collection.updateOne({ user_id: userId }, updateOperation);
+
+    console.log("User sudah berhasil diupdate nih ye!!!");
+    console.log(result);
+
+    res.send("User sudah berhasil diupdate nih ye!!!");
+  } finally {
+    await client.close();
+  }
+};
+
 
  module.exports = {
    //POST registerUser(no_hp, name)
@@ -83,6 +109,7 @@ const getUserById = async (req, res) => {
    getUserById,
    //GET getUserById(user_id)
    //PUT editUser(user_id)
+   updateUser,
    //DELETE deleteUser(user_id)
 
  };
