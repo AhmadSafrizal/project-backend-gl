@@ -1,13 +1,20 @@
 var client = require("../library/database");
 
 const getAllProduk = async function (req, res) {
+  let page = parseInt(req.query.page) || 1;
+  let pageSize = parseInt(req.query.pageSize) || 10;
+
   try {
     await client.connect();
 
     let collection = await client.db("ecommerce").collection("produk");
-    let results = await collection.find({}).limit(50).toArray();
+    let results = await collection
+      .find({})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .toArray();
     // console.log(results);
-    console.log("get all produk");
+    console.log(`Get all produk - Page: ${page}, PageSize: ${pageSize}`);
     await res.send(results);
   } finally {
     // Ensures that the client will close when you finish/error
@@ -16,13 +23,20 @@ const getAllProduk = async function (req, res) {
 };
 
 const getAllKategori = async function (req, res) {
+  let page = parseInt(req.query.page) || 1;
+  let pageSize = parseInt(req.query.pageSize) || 10;
+
   try {
     await client.connect();
 
     let collection = await client.db("ecommerce").collection("kategori");
-    let results = await collection.find({}).limit(50).toArray();
+    let results = await collection
+      .find({})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .toArray();
     // console.log(results);
-    console.log("get all kategori");
+    console.log(`Get all kategori - Page: ${page}, PageSize: ${pageSize}`);
     await res.send(results);
   } finally {
     // Ensures that the client will close when you finish/error
@@ -32,6 +46,8 @@ const getAllKategori = async function (req, res) {
 
 const getProdukByKategoriId = async function (req, res) {
   const kategoriId = req.params.kategori_id;
+  let page = parseInt(req.query.page) || 1;
+  let pageSize = parseInt(req.query.pageSize) || 10;
 
   try {
     await client.connect();
@@ -40,16 +56,15 @@ const getProdukByKategoriId = async function (req, res) {
 
     // Get produk berdasarkan kategoriId
     const products = await produkCollection
-      .find({ kategori_id: parseInt(kategoriId) })
-      .limit(50)
+      .find({})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .toArray();
 
     if (products.length === 0) {
-      return res
-        .status(404)
-        .send({
-          message: "Wah  produk dengan kategori tersebut tidak ada nih !!!",
-        });
+      return res.status(404).send({
+        message: "Wah  produk dengan kategori tersebut tidak ada nih !!!",
+      });
     }
 
     console.log(`Get produk dengan kategori_id : ${kategoriId}`);
@@ -61,6 +76,8 @@ const getProdukByKategoriId = async function (req, res) {
 
 const getProdukByArea = async function (req, res) {
   const area = req.params.area;
+  let page = parseInt(req.query.page) || 1;
+  let pageSize = parseInt(req.query.pageSize) || 10;
 
   try {
     await client.connect();
@@ -70,8 +87,9 @@ const getProdukByArea = async function (req, res) {
     const areaRegex = new RegExp(area, "i");
     // Dapatkan produk berdasarkan area
     const products = await produkCollection
-      .find({ area: { $regex: areaRegex } })
-      .limit(50)
+      .find({})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .toArray();
 
     if (products.length === 0) {
