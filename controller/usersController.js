@@ -100,9 +100,51 @@ const updateUser = async function (req, res) {
   }
 };
 
+const registerUser = async function (req, res) {
+  const crypto = require('crypto');
+  const { no_hp, name } = req.body; // Ambil no_hp dan name dari body request
+  const user_id = Math.floor(Math.random() * 900000) + 100000;
+  const apiKey = crypto.randomBytes(16).toString('hex'); // Menghasilkan API key baru
+
+  try {
+    await client.connect();
+
+    const usersCollection = await client.db("ecommerce").collection("users");
+
+    // Cek apakah user dengan no_hp tersebut sudah terdaftar
+    const existingUser = await usersCollection.findOne({ no_hp });
+
+    // Jika user sudah terdaftar, kirim pesan kesalahan
+    if (existingUser) {
+      return res.status(400).send({
+        message: "User dengan nomor HP tersebut sudah terdaftar!",
+      });
+    }
+
+    // Jika user belum terdaftar, tambahkan user baru
+    const newUser = {
+      user_id,
+      no_hp,
+      name,
+      api_key: apiKey, // Tambahkan API key ke data user baru
+      // Anda dapat menambahkan properti lain jika diperlukan
+    };
+
+    await usersCollection.insertOne(newUser);
+
+    console.log('User berhasil terdaftar');
+    res.status(201).send({
+      message: `User berhasil terdaftar dengan api_key: ${apiKey}`,
+    });
+  } finally {
+    await client.close();
+  }
+};
+
 
  module.exports = {
    //POST registerUser(no_hp, name)
+   registerUser,
    //GET getApiKey(no_hp)
    getApiKey,
    //GET getAllUser()
