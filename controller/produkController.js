@@ -85,9 +85,10 @@ const getProdukByArea = async function (req, res) {
     const produkCollection = await client.db("ecommerce").collection("produk");
     // Menggunakan ekspresi reguler untuk mencocokkan area tanpa memperhatikan huruf besar/kecil
     const areaRegex = new RegExp(area, "i");
-    // Dapatkan produk berdasarkan area
+    
+    // Menambahkan pencarian berdasarkan area dengan like query
     const products = await produkCollection
-      .find({})
+      .find({ area: { $regex: areaRegex } })
       .skip((page - 1) * pageSize)
       .limit(pageSize)
       .toArray();
