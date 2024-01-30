@@ -126,18 +126,64 @@ const options = {
           summary: "Mengambil data kategori produk by id",
           description:
             "Mengambil data pada tabel kategori yang ada dalam database berdasarkan kategori id",
-            parameters: [
-              {
-                name: "kategori_id",
-                in: "path",
-                required: true,
-                description: "ID kategori produk yang ingin diambil",
-                schema: {
-                  type: "integer"
-                }
-              }
-            ],
-            responses: {
+          parameters: [
+            {
+              name: "kategori_id",
+              in: "path",
+              required: true,
+              description: "ID kategori produk yang ingin diambil",
+              schema: {
+                type: "integer",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Berhasil mengambil data kategori",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        _id: {
+                          type: "string",
+                        },
+                        kategori_id: {
+                          type: "integer",
+                        },
+                        name: {
+                          type: "string",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+
+      // Kategori Produk
+      "/produk/name/:name": {
+        get: {
+          summary: "Mengambil data kategori produk by name",
+          description:
+            "Mengambil data pada tabel kategori yang ada dalam database berdasarkan nama produk",
+          parameters: [
+            {
+              name: "name",
+              in: "path",
+              required: true,
+              description: "ID kategori produk yang ingin diambil",
+              schema: {
+                type: "integer",
+              },
+            },
+          ],
+          responses: {
             200: {
               description: "Berhasil mengambil data kategori",
               content: {

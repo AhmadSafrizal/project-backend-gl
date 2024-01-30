@@ -85,7 +85,7 @@ const getProdukByArea = async function (req, res) {
     const produkCollection = await client.db("ecommerce").collection("produk");
     // Menggunakan ekspresi reguler untuk mencocokkan area tanpa memperhatikan huruf besar/kecil
     const areaRegex = new RegExp(area, "i");
-    
+
     // Menambahkan pencarian berdasarkan area dengan like query
     const products = await produkCollection
       .find({ area: { $regex: areaRegex } })
@@ -107,7 +107,7 @@ const getProdukByArea = async function (req, res) {
 };
 
 const getProdukByName = async function (req, res) {
-  const name = req.params.name;
+  const name = req.query.name;
   let page = parseInt(req.query.page) || 1;
   let pageSize = parseInt(req.query.pageSize) || 10;
 
@@ -117,7 +117,7 @@ const getProdukByName = async function (req, res) {
     const produkCollection = await client.db("ecommerce").collection("produk");
     // Menggunakan ekspresi reguler untuk mencocokkan name tanpa memperhatikan huruf besar/kecil
     const nameRegex = new RegExp(name, "i");
-    
+
     // Menambahkan pencarian berdasarkan name dengan like query
     const products = await produkCollection
       .find({ name: { $regex: nameRegex } })
