@@ -13,6 +13,16 @@ const options = {
         url: "http://localhost:4000",
       },
     ],
+    tags: [
+      {
+        name: "Produk",
+        description: "Endpoint terkait Produk",
+      },
+      {
+        name: "User",
+        description: "Endpoint terkait User",
+      },
+    ],
     paths: {
       // Produk ALl
       "/produk/all": {
@@ -82,6 +92,90 @@ const options = {
               },
             },
           },
+          tags: ["Produk"],
+        },
+      },
+
+      // Produk By ID
+      "/produk/{product_id}": {
+        get: {
+          summary: "Mengambil data kategori produk By ID produk",
+          description:
+            "Mengambil data pada tabel kategori yang ada dalam database berdasarkan id produk",
+          parameters: [
+            {
+              name: "product_id",
+              in: "path",
+              required: true,
+              description: "ID produk yang ingin diambil",
+              schema: {
+                type: "integer",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Berhasil mengambil data produk",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        _id: {
+                          type: "string",
+                        },
+                        name: {
+                          type: "string",
+                        },
+                        url: {
+                          type: "string",
+                        },
+                        kategori_id: {
+                          type: "integer",
+                        },
+                        shop_id: {
+                          type: "integer",
+                        },
+                        item_id: {
+                          type: "integer",
+                        },
+                        product_id: {
+                          type: "integer",
+                        },
+                        price: {
+                          type: "integer",
+                        },
+                        min_price: {
+                          type: "integer",
+                        },
+                        max_price: {
+                          type: "integer",
+                        },
+                        area: {
+                          type: "string",
+                        },
+                        stock: {
+                          type: "integer",
+                        },
+                        discount: {
+                          type: "string",
+                        },
+                        ratings: {
+                          type: "integer",
+                        },
+                        sold: {
+                          type: "integer",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          tags: ["Produk"],
         },
       },
 
@@ -117,6 +211,7 @@ const options = {
               },
             },
           },
+          tags: ["Produk"],
         },
       },
 
@@ -163,11 +258,12 @@ const options = {
               },
             },
           },
+          tags: ["Produk"],
         },
       },
 
       // Kategori Produk
-      "/produk/name/:name": {
+      "/produk/search": {
         get: {
           summary: "Mengambil data kategori produk by name",
           description:
@@ -175,17 +271,17 @@ const options = {
           parameters: [
             {
               name: "name",
-              in: "path",
+              in: "query",
               required: true,
-              description: "ID kategori produk yang ingin diambil",
+              description: "Nama produk yang ingin diambil",
               schema: {
-                type: "integer",
+                type: "string",
               },
             },
           ],
           responses: {
             200: {
-              description: "Berhasil mengambil data kategori",
+              description: "Berhasil mengambil data produk",
               content: {
                 "application/json": {
                   schema: {
@@ -196,10 +292,99 @@ const options = {
                         _id: {
                           type: "string",
                         },
+                        name: {
+                          type: "string",
+                        },
+                        url: {
+                          type: "string",
+                        },
                         kategori_id: {
                           type: "integer",
                         },
+                        shop_id: {
+                          type: "integer",
+                        },
+                        item_id: {
+                          type: "integer",
+                        },
+                        product_id: {
+                          type: "integer",
+                        },
+                        price: {
+                          type: "integer",
+                        },
+                        min_price: {
+                          type: "integer",
+                        },
+                        max_price: {
+                          type: "integer",
+                        },
+                        area: {
+                          type: "string",
+                        },
+                        stock: {
+                          type: "integer",
+                        },
+                        discount: {
+                          type: "string",
+                        },
+                        ratings: {
+                          type: "integer",
+                        },
+                        sold: {
+                          type: "integer",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          tags: ["Produk"],
+        },
+      },
+
+      // Produk ALl
+      "/users/getAllUser": {
+        get: {
+          summary: "Mengambil semua data user",
+          description:
+            "Mengambil semua data pada tabel user yang ada dalam database",
+          parameters: [
+            {
+              name: "api_key",
+              in: "query",
+              required: true,
+              description: "api key dari user",
+              schema: {
+                type: "string",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Berhasil mengambil data user",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        _id: {
+                          type: "string",
+                        },
+                        user_id: {
+                          type: "integer",
+                        },
+                        no_hp: {
+                          type: "string",
+                        },
                         name: {
+                          type: "string",
+                        },
+                        api_key: {
                           type: "string",
                         },
                       },
@@ -209,6 +394,7 @@ const options = {
               },
             },
           },
+          tags: ["User"],
         },
       },
     },
