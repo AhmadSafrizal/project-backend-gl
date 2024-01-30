@@ -44,13 +44,44 @@ const getApiKey = async function (req, res) {
   }
 };
 
-module.exports = {
-  //POST registerUser(no_hp, name)
-  //GET getApiKey(no_hp)
-  getApiKey,
-  //GET getAllUser()
-  getAllUser,
-  //GET getUserById(user_id)
-  //PUT editUser(user_id)
-  //DELETE deleteUser(user_id)
+const getUserById = async (req, res) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  const database = client.db('ecommerce');
+  const userCollection = database.collection('users');
+
+  try {
+    await client.connect();
+
+    const user = await userCollection.findOne({ user_id: userId });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log(`Get user dengan user_id : ${userId}`);
+    res.send(user);
+  } catch (err) {
+    console.error('Error:', err);
+    return res
+    .status(500)
+    .send({ error: 'Internal Server Error' });
+  } finally {
+    await client.close();
+  }
 };
+
+
+
+ module.exports = {
+   //POST registerUser(no_hp, name)
+   //GET getApiKey(no_hp)
+   getApiKey,
+   //GET getAllUser()
+   getAllUser,
+   getUserById,
+   //GET getUserById(user_id)
+   //PUT editUser(user_id)
+   //DELETE deleteUser(user_id)
+
+ };
