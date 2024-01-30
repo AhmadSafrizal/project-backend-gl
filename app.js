@@ -5,7 +5,7 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerDocs = require("./swagger");
 
 const produkRouter = require("./routes/produk");
-const userRouter = require("./routes/user");
+const usersRouter = require("./routes/users");
 const orderRouter = require("./routes/order");
 
 const app = express();
@@ -18,7 +18,7 @@ app.listen(4000, () => {
 });
 
 app.use("/produk", produkRouter);
-//app.use("/user", userRouter);
+app.use("/user", usersRouter);
 //app.use("/order", orderkRouter);
 
 
