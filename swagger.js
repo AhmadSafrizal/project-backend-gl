@@ -121,12 +121,23 @@ const options = {
       },
 
       // Kategori Produk
-      "/produk/kategori/:kategori_id": {
+      "/produk/kategori/{kategori_id}": {
         get: {
           summary: "Mengambil data kategori produk by id",
           description:
             "Mengambil data pada tabel kategori yang ada dalam database berdasarkan kategori id",
-          responses: {
+            parameters: [
+              {
+                name: "kategori_id",
+                in: "path",
+                required: true,
+                description: "ID kategori produk yang ingin diambil",
+                schema: {
+                  type: "integer"
+                }
+              }
+            ],
+            responses: {
             200: {
               description: "Berhasil mengambil data kategori",
               content: {
