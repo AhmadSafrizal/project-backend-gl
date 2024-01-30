@@ -1,4 +1,5 @@
 var client = require("../library/database");
+
 const getAllUser = async function (req, res) {
   try {
     await client.connect();

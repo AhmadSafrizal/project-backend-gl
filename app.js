@@ -9,6 +9,7 @@ const usersRouter = require("./routes/users");
 const orderRouter = require("./routes/order");
 
 const app = express();
+app.use(express.json());
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
