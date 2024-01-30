@@ -160,10 +160,40 @@ const getProdukByName = async function (req, res) {
   }
 };
 
+const getProdukByFiltering = async function (req, res) {
+  const max_price = parseInt(req.query.max_price)  || 999999999999999;
+  const discount = parseFloat(req.query.discount) || 0;
+  const rating = parseFloat(req.query.rating) || 0;
+
+  try {
+    await client.connect();
+
+    const produkCollection = await client.db("ecommerce").collection("produk");
+   console.log(max_price,discount,rating);
+    const products = await produkCollection
+      .find({
+        "price": { "$lt": max_price },
+        "discount": { "$gt": discount },
+        "ratings": { "$gt": rating }
+      })     
+      .toArray();
+
+    if (products.length === 0) {
+      return res
+        .status(404)
+        .send({ message: `Produk tidak ditemukan.` });
+    }
+
+    console.log(`Get produk by filter`);
+    res.send(products);
+  } finally {
+    await client.close();
+  }
+};
 module.exports = {
   getAllProduk,
   //search
-  //getProdukByFiltering(query)
+  getProdukByFiltering,
   getAllKategori,
   getProdukByKategoriId,
   getProdukByArea,

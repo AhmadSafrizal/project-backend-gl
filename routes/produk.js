@@ -9,5 +9,6 @@ router.get("/kategori/:kategori_id", produkController.getProdukByKategoriId);
 router.get("/area/:area", produkController.getProdukByArea);
 router.get(`/search`, produkController.getProdukByName);
 router.get('/:product_id', produkController.getProdukById);
+router.get("/search/filter", produkController.getProdukByFiltering);
 
 module.exports = router;
