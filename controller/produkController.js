@@ -22,6 +22,28 @@ const getAllProduk = async function (req, res) {
   }
 };
 
+const getProdukById = async function (req, res) {
+  const produkId = parseInt(req.params.product_id); 
+
+  try {
+    await client.connect();
+
+    const collection = await client.db("ecommerce").collection("produk");
+    const result = await collection.findOne({ product_id: produkId });
+
+    if (!result) {
+      return res.status(404).send("Product not found");
+    }
+
+    console.log(`Get product by ID - Product ID: ${produkId}`);
+    res.send(result);
+  } finally {
+    // Ensure that the client will close when you finish/error
+    await client.close();
+  }
+};
+
+
 const getAllKategori = async function (req, res) {
   let page = parseInt(req.query.page) || 1;
   let pageSize = parseInt(req.query.pageSize) || 10;
@@ -146,4 +168,5 @@ module.exports = {
   getProdukByKategoriId,
   getProdukByArea,
   getProdukByName,
+  getProdukById
 };
