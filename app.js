@@ -18,7 +18,7 @@ app.listen(4000, () => {
 });
 
 app.use("/produk", produkRouter);
-app.use("/user", usersRouter);
+app.use("/users", usersRouter);
 //app.use("/order", orderkRouter);
 
 

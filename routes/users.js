@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
-const produkController = require('../controller/produkController');
+var verif = require("../library/verif");
+const usersController = require('../controller/usersController');
 
 
-router.get('/all', produkController.getAllProduk);
+
+router.get('/getAllUser', verif.cekAPI, usersController.getAllUser);
+router.get('/getApiKey/:no_hp', usersController.getApiKey);
   
 module.exports = router;
