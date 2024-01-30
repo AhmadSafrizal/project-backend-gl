@@ -128,10 +128,10 @@ const getProdukByName = async function (req, res) {
     if (products.length === 0) {
       return res
         .status(404)
-        .send({ message: `Produk di name ${name} tidak ditemukan.` });
+        .send({ message: `Produk dengan nama ${name} tidak ditemukan.` });
     }
 
-    console.log(`Get produk pada name: ${name}`);
+    console.log(`Get produk dengan nama: ${name}`);
     res.send(products);
   } finally {
     await client.close();
