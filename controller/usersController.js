@@ -45,12 +45,11 @@ const getApiKey = async function (req, res) {
   }
 };
 
-
 const getUserById = async (req, res) => {
   const userId = parseInt(req.params.userId, 10);
 
-  const database = client.db('ecommerce');
-  const userCollection = database.collection('users');
+  const database = client.db("ecommerce");
+  const userCollection = database.collection("users");
 
   try {
     await client.connect();
@@ -58,27 +57,24 @@ const getUserById = async (req, res) => {
     const user = await userCollection.findOne({ user_id: userId });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     console.log(`Get user dengan user_id : ${userId}`);
     res.send(user);
   } catch (err) {
-    console.error('Error:', err);
-    return res
-    .status(500)
-    .send({ error: 'Internal Server Error' });
+    console.error("Error:", err);
+    return res.status(500).send({ error: "Internal Server Error" });
   } finally {
     await client.close();
   }
 };
 
-
 const updateUser = async function (req, res) {
   try {
     await client.connect();
 
-    const userId = parseInt(req.params.user_id); 
+    const userId = parseInt(req.params.user_id);
 
     const collection = await client.db("ecommerce").collection("users");
 
@@ -86,13 +82,15 @@ const updateUser = async function (req, res) {
       $set: {
         no_hp: req.body.no_hp,
         name: req.body.name,
-      }
+      },
     };
 
-    const result = await collection.updateOne({ user_id: userId }, updateOperation);
+    const result = await collection.updateOne(
+      { user_id: userId },
+      updateOperation
+    );
 
     console.log("User sudah berhasil diupdate nih ye!!!");
-    console.log(result);
 
     res.send("User sudah berhasil diupdate nih ye!!!");
   } finally {
@@ -101,10 +99,10 @@ const updateUser = async function (req, res) {
 };
 
 const registerUser = async function (req, res) {
-  const crypto = require('crypto');
+  const crypto = require("crypto");
   const { no_hp, name } = req.body; // Ambil no_hp dan name dari body request
   const user_id = Math.floor(Math.random() * 900000) + 100000;
-  const apiKey = crypto.randomBytes(16).toString('hex'); // Menghasilkan API key baru
+  const apiKey = crypto.randomBytes(16).toString("hex"); // Menghasilkan API key baru
 
   try {
     await client.connect();
@@ -132,7 +130,7 @@ const registerUser = async function (req, res) {
 
     await usersCollection.insertOne(newUser);
 
-    console.log('User berhasil terdaftar');
+    console.log("User berhasil terdaftar");
     res.status(201).send({
       message: `User berhasil terdaftar dengan api_key: ${apiKey}`,
     });
@@ -163,18 +161,17 @@ const deleteUser = async function (req, res) {
   }
 };
 
- module.exports = {
-   //POST registerUser(no_hp, name)
-   registerUser,
-   //GET getApiKey(no_hp)
-   getApiKey,
-   //GET getAllUser()
-   getAllUser,
-   getUserById,
-   //GET getUserById(user_id)
-   //PUT editUser(user_id)
-   updateUser,
-   deleteUser
-   //DELETE deleteUser(user_id)
-
- };
+module.exports = {
+  //POST registerUser(no_hp, name)
+  registerUser,
+  //GET getApiKey(no_hp)
+  getApiKey,
+  //GET getAllUser()
+  getAllUser,
+  getUserById,
+  //GET getUserById(user_id)
+  //PUT editUser(user_id)
+  updateUser,
+  deleteUser,
+  //DELETE deleteUser(user_id)
+};

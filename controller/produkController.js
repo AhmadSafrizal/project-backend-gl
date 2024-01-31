@@ -23,7 +23,7 @@ const getAllProduk = async function (req, res) {
 };
 
 const getProdukById = async function (req, res) {
-  const produkId = parseInt(req.params.product_id); 
+  const produkId = parseInt(req.params.product_id);
 
   try {
     await client.connect();
@@ -42,7 +42,6 @@ const getProdukById = async function (req, res) {
     await client.close();
   }
 };
-
 
 const getAllKategori = async function (req, res) {
   let page = parseInt(req.query.page) || 1;
@@ -161,27 +160,30 @@ const getProdukByName = async function (req, res) {
 };
 
 const getProdukByFiltering = async function (req, res) {
-  const max_price = parseInt(req.query.max_price)  || 999999999999999;
+  const max_price = parseInt(req.query.max_price) || 999999999999999;
   const discount = parseFloat(req.query.discount) || 0;
   const rating = parseFloat(req.query.rating) || 0;
+
+  let page = parseInt(req.query.page) || 1;
+  let pageSize = parseInt(req.query.pageSize) || 10;
 
   try {
     await client.connect();
 
     const produkCollection = await client.db("ecommerce").collection("produk");
-   console.log(max_price,discount,rating);
+    console.log(max_price, discount, rating);
     const products = await produkCollection
       .find({
-        "price": { "$lt": max_price },
-        "discount": { "$gt": discount },
-        "ratings": { "$gt": rating }
-      })     
+        price: { $lt: max_price },
+        discount: { $gt: discount },
+        ratings: { $gt: rating },
+      })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .toArray();
 
     if (products.length === 0) {
-      return res
-        .status(404)
-        .send({ message: `Produk tidak ditemukan.` });
+      return res.status(404).send({ message: `Produk tidak ditemukan.` });
     }
 
     console.log(`Get produk by filter`);
@@ -198,5 +200,5 @@ module.exports = {
   getProdukByKategoriId,
   getProdukByArea,
   getProdukByName,
-  getProdukById
+  getProdukById,
 };
