@@ -23,7 +23,7 @@ app.listen(4000, () => {
 
 app.use("/produk", produkRouter);
 app.use("/users", usersRouter);
-//app.use("/order", orderkRouter);
+app.use("/order", orderRouter);
 
 
 module.exports = app;
