@@ -3,7 +3,7 @@ const router = express.Router();
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const swaggerUI = require("swagger-ui-express");
 const swaggerDocs = require("./swagger");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
 const produkRouter = require("./routes/produk");
 const usersRouter = require("./routes/users");
@@ -24,6 +24,5 @@ app.listen(4000, () => {
 app.use("/produk", produkRouter);
 app.use("/users", usersRouter);
 app.use("/order", orderRouter);
-
 
 module.exports = app;
