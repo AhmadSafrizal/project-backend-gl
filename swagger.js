@@ -102,11 +102,11 @@ const propertiOrder = [
             sold: {
               type: "integer",
             },
-          }
-        ]
-      }
-    ]
-  }
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 const propertiProduk = {
@@ -567,7 +567,7 @@ const options = {
 
       // update user By id
       "/users/delete/{userId}": {
-        put: {
+        delete: {
           summary: "Delete data user",
           description: "Delete data pada tabel user yang ada dalam database",
           parameters: [
@@ -608,24 +608,24 @@ const options = {
           summary: "Registrasi data user",
           description:
             "Registrasi data pada tabel user yang ada dalam database",
-            requestBody: {
-              content: {
-                "application/json": {
-                  schema: {
-                    type: "object",
-                    properties: {
-                      name: {
-                        type: "string",
-                      },
-                      no_hp: {
-                        type: "string",
-                      },
+          requestBody: {
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
                     },
-                    required: ["name", "no_hp"],
+                    no_hp: {
+                      type: "string",
+                    },
                   },
+                  required: ["name", "no_hp"],
                 },
               },
             },
+          },
           responses: {
             200: {
               description: "Berhasil registrasi data user",
@@ -646,7 +646,7 @@ const options = {
         },
       },
 
-      // update user By id
+      // get all order
       "/order/getAllOrder": {
         get: {
           summary: "Mengambil data order",
@@ -672,26 +672,174 @@ const options = {
         },
       },
 
-      // update user By id
+      // get order by id
       "/order/getOrderById/{order_id}": {
         get: {
           summary: "Mengambil data order",
           description:
             "Registrasi data pada tabel user yang ada dalam database",
-            parameters: [
-              {
-                name: "order_id",
-                in: "path",
-                required: true,
-                description: "ID dari order",
-                schema: {
-                  type: "integer",
-                },
+          parameters: [
+            {
+              name: "order_id",
+              in: "path",
+              required: true,
+              description: "ID dari order",
+              schema: {
+                type: "integer",
               },
-            ],
+            },
+          ],
           responses: {
             200: {
               description: "Berhasil mengambil data order",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "array",
+                      properties: propertiOrder,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          tags: ["Order"],
+        },
+      },
+
+      // get order by id
+      "/order/createOrder/{user_id}": {
+        post: {
+          summary: "Menambah data order",
+          description: "Menambah data pada tabel user yang ada dalam database",
+          parameters: [
+            {
+              name: "user_id",
+              in: "path",
+              required: true,
+              description: "ID dari user",
+              schema: {
+                type: "integer",
+              },
+            },
+          ],
+          requestBody: {
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  order_produk: [
+                    {
+                      product_id: {
+                        type: "integer",
+                      },
+                      qty: {
+                        type: "integer",
+                      },
+                    },
+                  ],
+                  required: ["order_produk"],
+                },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: "Berhasil menambah data order",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "array",
+                      properties: propertiOrder,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          tags: ["Order"],
+        },
+      },
+
+      // update order by id
+      "/order/editOrder/{order_id}": {
+        put: {
+          summary: "Mengubah data order",
+          description: "MEngubah data pada tabel user yang ada dalam database",
+          parameters: [
+            {
+              name: "order_id",
+              in: "path",
+              required: true,
+              description: "ID dari order",
+              schema: {
+                type: "integer",
+              },
+            },
+          ],
+          requestBody: {
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  order_produk: [
+                    {
+                      product_id: {
+                        type: "integer",
+                      },
+                      qty: {
+                        type: "integer",
+                      },
+                    },
+                  ],
+                  required: ["order_produk"],
+                },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: "Berhasil menambah data order",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "array",
+                      properties: propertiOrder,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          tags: ["Order"],
+        },
+      },
+
+      // get order by id
+      "/order/deleteOrder/{order_id}": {
+        delete: {
+          summary: "Menghapus data order",
+          description: "Menghapus data pada tabel user yang ada dalam database",
+          parameters: [
+            {
+              name: "order_id",
+              in: "path",
+              required: true,
+              description: "ID dari order",
+              schema: {
+                type: "integer",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Berhasil menghapus data order",
               content: {
                 "application/json": {
                   schema: {
