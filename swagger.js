@@ -443,25 +443,25 @@ const options = {
                 type: "integer",
               },
             },
-            {
-              name: "name",
-              in: "body",
-              required: true,
-              description: "Nama dari user",
-              schema: {
-                type: "string",
-              },
-            },
-            {
-              name: "no_hp",
-              in: "body",
-              required: true,
-              description: "No HP dari user",
-              schema: {
-                type: "string",
-              },
-            },
           ],
+          requestBody: {
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                    },
+                    no_hp: {
+                      type: "string",
+                    },
+                  },
+                  required: ["name", "no_hp"],
+                },
+              },
+            },
+          },
           responses: {
             200: {
               description: "Berhasil mengubah data user",
@@ -525,26 +525,24 @@ const options = {
           summary: "Registrasi data user",
           description:
             "Registrasi data pada tabel user yang ada dalam database",
-          parameters: [
-            {
-              name: "name",
-              in: "body",
-              required: true,
-              description: "Nama dari user",
-              schema: {
-                type: "string",
+            requestBody: {
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      name: {
+                        type: "string",
+                      },
+                      no_hp: {
+                        type: "string",
+                      },
+                    },
+                    required: ["name", "no_hp"],
+                  },
+                },
               },
             },
-            {
-              name: "no_hp",
-              in: "body",
-              required: true,
-              description: "No HP dari user",
-              schema: {
-                type: "string",
-              },
-            },
-          ],
           responses: {
             200: {
               description: "Berhasil registrasi data user",
