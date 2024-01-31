@@ -4,8 +4,10 @@ const orderController = require("../controller/orderController");
 var verif = require("../library/verif");
 
 router.get("/getAllOrder", orderController.getAllOrder);
-//GET getOrderById(order_id)
-//POST createOrder(object produk)
-//PUT editOrder(order_id, object produk)
+router.post("/createOrder/:user_id", orderController.createOrder);
+router.get("/getOrderById/:order_id", orderController.getOrderById);
+router.put("/editOrder/:order_id", orderController.editOrder);
+router.delete("/deleteOrder/:order_id", orderController.deleteOrder);
+
 //DELETE deleteOrder(order_id)
 module.exports = router;
