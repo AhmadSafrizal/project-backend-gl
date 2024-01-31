@@ -30,6 +30,85 @@ const paramsPageSize = {
   },
 };
 
+const propertiOrder = [
+  {
+    _id: {
+      type: "string",
+    },
+    user_id: {
+      type: "integer",
+    },
+    order_id: {
+      type: "integer",
+    },
+    orderdetails: [
+      {
+        _id: {
+          type: "string",
+        },
+        order_id: {
+          type: "integer",
+        },
+        product_id: {
+          type: "integer",
+        },
+        qty: {
+          type: "integer",
+        },
+        productdetails: [
+          {
+            _id: {
+              type: "string",
+            },
+            name: {
+              type: "string",
+            },
+            url: {
+              type: "string",
+            },
+            kategori_id: {
+              type: "integer",
+            },
+            shop_id: {
+              type: "integer",
+            },
+            item_id: {
+              type: "integer",
+            },
+            product_id: {
+              type: "integer",
+            },
+            price: {
+              type: "integer",
+            },
+            min_price: {
+              type: "integer",
+            },
+            max_price: {
+              type: "integer",
+            },
+            area: {
+              type: "string",
+            },
+            stock: {
+              type: "integer",
+            },
+            discount: {
+              type: "integer",
+            },
+            rating: {
+              type: "float",
+            },
+            sold: {
+              type: "integer",
+            },
+          }
+        ]
+      }
+    ]
+  }
+];
+
 const propertiProduk = {
   _id: {
     type: "string",
@@ -129,6 +208,10 @@ const options = {
       {
         name: "User",
         description: "Endpoint terkait User",
+      },
+      {
+        name: "Order",
+        description: "Endpoint terkait Order",
       },
     ],
     paths: {
@@ -519,7 +602,7 @@ const options = {
         },
       },
 
-      // update user By id
+      // Register user
       "/users/registerUser": {
         post: {
           summary: "Registrasi data user",
@@ -560,6 +643,69 @@ const options = {
             },
           },
           tags: ["User"],
+        },
+      },
+
+      // update user By id
+      "/order/getAllOrder": {
+        get: {
+          summary: "Mengambil data order",
+          description:
+            "Registrasi data pada tabel user yang ada dalam database",
+          responses: {
+            200: {
+              description: "Berhasil mengambil data order",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "array",
+                      properties: propertiOrder,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          tags: ["Order"],
+        },
+      },
+
+      // update user By id
+      "/order/getOrderById/{order_id}": {
+        get: {
+          summary: "Mengambil data order",
+          description:
+            "Registrasi data pada tabel user yang ada dalam database",
+            parameters: [
+              {
+                name: "order_id",
+                in: "path",
+                required: true,
+                description: "ID dari order",
+                schema: {
+                  type: "integer",
+                },
+              },
+            ],
+          responses: {
+            200: {
+              description: "Berhasil mengambil data order",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "array",
+                      properties: propertiOrder,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          tags: ["Order"],
         },
       },
     },
