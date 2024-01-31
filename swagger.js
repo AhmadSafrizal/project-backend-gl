@@ -646,6 +646,49 @@ const options = {
         },
       },
 
+      // GET API User
+      // Tambahkan definisi jalur baru di dalam objek paths
+      "/users/getApiKey/{no_hp}": {
+        get: {
+          summary: "Mendapatkan API Key berdasarkan nomor HP",
+          description:
+            "Mendapatkan API Key dari user berdasarkan nomor HP yang diberikan",
+          parameters: [
+            {
+              name: "no_hp",
+              in: "path",
+              required: true,
+              description: "Nomor HP user",
+              schema: {
+                type: "string",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Berhasil mendapatkan API Key",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object", // Sesuaikan dengan respons yang diharapkan
+                    properties: {
+                      api_key: {
+                        type: "string",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            404: {
+              description:
+                "User dengan nomor HP yang diberikan tidak ditemukan",
+            },
+          },
+          tags: ["User"], // Sesuaikan tag jika diperlukan
+        },
+      },
+
       // get all order
       "/order/getAllOrder": {
         get: {
