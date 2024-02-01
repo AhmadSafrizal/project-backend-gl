@@ -4,13 +4,14 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 const swaggerUI = require("swagger-ui-express");
 const swaggerDocs = require("./swagger");
 const bodyParser = require("body-parser");
-
+const cors = require('cors');
 const produkRouter = require("./routes/produk");
 const usersRouter = require("./routes/users");
 const orderRouter = require("./routes/order");
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 app.use(bodyParser.json());
